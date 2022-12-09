@@ -4,8 +4,6 @@ import { RiCheckboxFill } from "react-icons/ri";
 import { BiEditAlt } from "react-icons/bi";
 import { AiOutlineRight } from "react-icons/ai";
 import { HiOutlineChevronDown } from "react-icons/hi";
-import { TfiTrash } from "react-icons/tfi";
-import { BsCheck2All } from "react-icons/bs";
 import { BiBell, BiChevronRight, BiChevronLeft } from "react-icons/bi";
 
 import Project from "../components/Project";
@@ -192,8 +190,8 @@ const Dashboard = () => {
         </div>
         {/* User Task - Create,edit,Delete */}
 
-        <div className="flex flex-col h-5/6 2xl:h-3/4  hideScrollBar mt-5 ">
-          <div className="flex justify-between px-3 py-2 items-center">
+        <div className="flex flex-col h-5/6 2xl:h-3/4 mt-5">
+          <div className="flex justify-between px-3 py-2 items-center h-1/6">
             <span className="font-semibold text-2xl">Tasks</span>
             <button className="bg-blue-500 text-white text-lg font-semibold px-2  rounded-full cursor-pointer pr-3 py-1">
               + Add
@@ -201,7 +199,7 @@ const Dashboard = () => {
           </div>
           {/* Task's List */}
 
-          <div className="mt-4 ">
+          <div className="mt-4 h-5/6 hideScrollBar">
             {fkLooper.map((task) => (
               <Task />
             ))}

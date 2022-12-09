@@ -1,12 +1,8 @@
-import React, { useState } from "react";
 import { menuItems } from "../utils/menuItems";
 import { SiOpenlayers } from "react-icons/si";
 import { CgLogOut } from "react-icons/cg";
 
 const Sidebar = () => {
-  //   const [menuExpanded, setMenuExpanded] = useState(false);
-  //   const handelMenuHoverOpen = (e) => {};
-
   return (
     <div className="h-screen flex flex-col py-3 px-6 w-max">
       <div className="text-3xl mt-5 text-blue-500">

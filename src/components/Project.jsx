@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { FaLinkedinIn } from "react-icons/fa";
 import { MdOutlineTaskAlt } from "react-icons/md";
 

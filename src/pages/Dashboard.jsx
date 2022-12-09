@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { RiCheckboxFill } from "react-icons/ri";
 import { BiEditAlt } from "react-icons/bi";
@@ -8,8 +8,10 @@ import { BiBell, BiChevronRight, BiChevronLeft } from "react-icons/bi";
 
 import Project from "../components/Project";
 import Task from "../components/Task";
+import { getAllProjects, getAllTask } from "../localStorageHelper";
+import CEProject from "../components/modals/CE_Project";
+import CETask from "../components/modals/CE_Task";
 
-const fkLooper = Array(10).fill("");
 const fkdates = [
   { day: "Mon", date: "09", isToday: false },
   { day: "Tue", date: "10", isToday: false },
@@ -19,10 +21,18 @@ const fkdates = [
   { day: "Sat", date: "14", isToday: false },
   { day: "Sun", date: "15", isToday: false },
 ];
-// TODO: The functionality to create, edit delete the task
 
 const Dashboard = () => {
+  const [projects, setProjects] = useState(getAllProjects());
+  const [task, setTask] = useState(getAllTask());
+  const [rerender, setRerender] = useState(false);
   const [projIsCompleted, setProjIsCompleted] = useState(false);
+  const [createProjModalOpen, setCreateProjModalOpen] = useState(false);
+  const [createTaskModalOpen, setCreateTaskModalOpen] = useState(false);
+  useEffect(() => {
+    setProjects(getAllProjects());
+    setTask(getAllTask());
+  }, [rerender]);
   return (
     <div className=" h-screen w-full flex ">
       <div className="hideScrollBar p-6 flex-auto w-7/12 border-r border-l border-gray-300">
@@ -114,16 +124,31 @@ const Dashboard = () => {
                   Completed
                 </span>
               </div>
-              <button className="bg-blue-500 text-white text-sm font-semibold px-2  rounded-full cursor-pointer pr-3 py-1">
+              <button
+                className="bg-blue-500 text-white text-sm font-semibold px-2  rounded-full cursor-pointer pr-3 py-1"
+                onClick={() => setCreateProjModalOpen(true)}
+              >
                 + Create
               </button>
             </div>
 
             {/* Projects List */}
             <div className="px-3 py-2 mt-2 ">
-              {fkLooper.map((proj, idx) => (
-                <Project idx={idx} />
-              ))}
+              {projects.length > 0 ? (
+                projects.map((proj, idx) =>
+                  !projIsCompleted ? (
+                    <Project idx={idx} proj={proj} />
+                  ) : (
+                    proj.status && <Project idx={idx} proj={proj} />
+                  )
+                )
+              ) : (
+                <div className="flex justify-center">
+                  <span className="text-xl text-gray-500">
+                    No projects pls add some
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -193,19 +218,34 @@ const Dashboard = () => {
         <div className="flex flex-col h-5/6 2xl:h-3/4 mt-5">
           <div className="flex justify-between px-3 py-2 items-center h-1/6">
             <span className="font-semibold text-2xl">Tasks</span>
-            <button className="bg-blue-500 text-white text-lg font-semibold px-2  rounded-full cursor-pointer pr-3 py-1">
+            <button
+              className="bg-blue-500 text-white text-lg font-semibold px-2  rounded-full cursor-pointer pr-3 py-1"
+              onClick={() => {
+                setCreateProjModalOpen(true);
+              }}
+            >
               + Add
             </button>
           </div>
           {/* Task's List */}
 
           <div className="mt-4 h-5/6 hideScrollBar">
-            {fkLooper.map((task) => (
+            {task.map((task) => (
               <Task />
             ))}
           </div>
         </div>
       </div>
+      {createProjModalOpen && (
+        <CEProject
+          close={() => {
+            setCreateProjModalOpen(false);
+            setRerender(!rerender);
+          }}
+          type="Create Project"
+        />
+      )}
+      {createTaskModalOpen && <CETask />}
     </div>
   );
 };

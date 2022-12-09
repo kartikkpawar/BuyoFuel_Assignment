@@ -1,19 +1,24 @@
 import { FaLinkedinIn } from "react-icons/fa";
 import { MdOutlineTaskAlt } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const Project = ({ proj, idx }) => {
   const progress = Math.floor(Math.random() * 95 + idx);
+  let navigate = useNavigate();
   return (
-    <div className="flex h-20 p-2 mb-3 shadow-lg hover:shadow-xl cursor-pointer rounded-lg">
+    <div
+      className="flex h-20 p-2 mb-3 shadow-lg hover:shadow-xl cursor-pointer rounded-lg"
+      onClick={() => navigate(`/project/${proj.id}`)}
+    >
       <div className="h-16 w-16 flex justify-center items-center rounded-md flex-shrink-0 bg-blue-500">
         <FaLinkedinIn className="text-4xl text-white" />
       </div>
       <div className="flex w-full justify-between">
         <div className="flex flex-col justify-center ml-5 flex-shrink-0">
-          <span className="text-lg font-semibold">Staaak Project</span>
+          <span className="text-lg font-semibold">{proj.name}</span>
           <span className="flex items-center text-base font-thin">
             <MdOutlineTaskAlt className="mr-1" />
-            Tasks
+            {proj.taskCount} Tasks
           </span>
         </div>
         <div className="w-7/12 flex flex-col justify-center px-5">

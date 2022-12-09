@@ -1,4 +1,9 @@
+import { useNavigate } from "react-router-dom";
+import { authUser } from "../localStorageHelper";
+
 const Signup = () => {
+  let navigate = useNavigate();
+
   return (
     <div className="flex h-screen w-full items-center justify-center flex-col">
       <div className=" mb-5 flex flex-col items-center">
@@ -42,7 +47,13 @@ const Signup = () => {
             SignIn
           </span>
         </div>
-        <button className="mt-5 text-white bg-blue-500 py-2 px-3 text-xl rounded-lg shadow-md">
+        <button
+          className="mt-5 text-white bg-blue-500 py-2 px-3 text-xl rounded-lg shadow-md"
+          onClick={() => {
+            authUser("SIGNIN");
+            navigate("/dashboard");
+          }}
+        >
           Sign up
         </button>
       </div>

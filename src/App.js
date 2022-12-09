@@ -1,23 +1,32 @@
 import React from "react";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import ProjectInfo from "./pages/ProjectInfo";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import ProtectedRoute from "./utils/ProtectedRoutes";
+import { isProjStrageInitialized } from "./localStorageHelper";
 
 const App = () => {
+  isProjStrageInitialized();
   return (
     <div className="flex">
       {/* <Sidebar /> */}
       <Router>
         <Routes>
+          {/* Setting default route to dashboard */}
+          <Route path="/" element={<Navigate to="/dashboard" />} />
           {/* protected route for dashboard and projects */}
 
           <Route
             exact
-            path="/project/:name"
+            path="/project/:id"
             element={
               <ProtectedRoute>
                 <ProjectInfo />

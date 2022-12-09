@@ -1,5 +1,5 @@
 import { AiOutlineRight } from "react-icons/ai";
-const Breadcrumb = () => {
+const Breadcrumb = ({ name }) => {
   return (
     <div className="flex items-center">
       <span className="mr-2 text-2xl font-semibold cursor-pointer">
@@ -11,7 +11,7 @@ const Breadcrumb = () => {
       </span>
       <AiOutlineRight className="mr-2 text-2xl" />
       <span className=" text-2xl text-blue-500 font-semibold cursor-pointer">
-        Staaak Project
+        {name}
       </span>
     </div>
   );

@@ -1,21 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Breadcrumb from "../components/Breadcrumb";
 import LineGraph from "../components/LineGraph";
 import { AiOutlineRollback } from "react-icons/ai";
+import { TfiTrash } from "react-icons/tfi";
 import Task from "../components/Task";
 import Member from "../components/Members";
+import { useNavigate, useParams } from "react-router-dom";
+import { deleteProject, getAllTask, getProject } from "../localStorageHelper";
 
 const fkLooper = Array(10).fill("");
 
 const ProjectInfo = () => {
+  let navigate = useNavigate();
+  const params = useParams();
+  const [projecInfo] = useState(getProject(params.id));
+
   return (
     <div className="flex h-screen w-full">
       <div className="border w-8/12 h-full flex justify-between p-5 flex-col">
         <div className="flex flex-col">
-          <div className="h-12 w-12 flex items-center justify-center rounded-full shadow-xl cursor-pointer mb-5">
-            <AiOutlineRollback />
+          <div className="flex items-center justify-between">
+            <div className="h-12 w-12 flex items-center justify-center rounded-full shadow-xl cursor-pointer mb-5">
+              <AiOutlineRollback onClick={() => navigate("/")} />
+            </div>
+            <div className="h-12 w-12 flex items-center justify-center rounded-full shadow-xl cursor-pointer mb-5 hover:text-red-500">
+              <TfiTrash
+                onClick={() => {
+                  deleteProject(params.id);
+                  navigate("/");
+                }}
+              />
+            </div>
           </div>
-          <Breadcrumb />
+          <Breadcrumb name={projecInfo[0].name} />
         </div>
         <LineGraph />
       </div>
@@ -32,7 +49,7 @@ const ProjectInfo = () => {
           {/* Task's List */}
 
           <div className="mt-4 h-5/6 hideScrollBar">
-            {fkLooper.map((task) => (
+            {getAllTask().map((task) => (
               <Task />
             ))}
           </div>
